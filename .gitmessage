@@ -1,0 +1,29 @@
+# Conventional Commits Template
+# 
+# Tipos de commit:
+# feat: nova funcionalidade
+# fix: correção de bug
+# docs: documentação
+# style: formatação, ponto e vírgula, etc
+# refactor: refatoração de código
+# perf: melhoria de performance
+# test: adicionando testes
+# chore: tarefas de manutenção
+# ci: configurações de CI/CD
+# build: build do sistema
+# revert: reverter commits
+#
+# Exemplo:
+# feat: adiciona autenticação JWT
+# 
+# Implementa sistema de autenticação usando JWT tokens
+# - Adiciona middleware de autenticação
+# - Cria endpoints de login/logout
+# - Implementa refresh tokens
+# - Adiciona validação de permissões
+
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
