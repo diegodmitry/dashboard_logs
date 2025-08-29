@@ -92,7 +92,7 @@ export class SSHFetchService {
             logger.error({
               message: 'Erro ao ler chave SSH',
               error: err.message,
-              keyPath: this.config.privateKeyPath,
+              keyPath: this.config.privateKeyPath || 'undefined',
             });
             reject(err);
           });
@@ -280,23 +280,27 @@ export class SSHFetchService {
       });
 
       // Ler chave privada
-      fs.readFile(this.config.privateKeyPath)
-        .then((privateKey) => {
-          conn.connect({
-            host: this.config.host,
-            port: this.config.port,
-            username: this.config.user,
-            privateKey,
-            readyTimeout: this.config.timeout,
+      if (this.config.privateKeyPath) {
+        fs.readFile(this.config.privateKeyPath)
+          .then((privateKey: Buffer) => {
+            conn.connect({
+              host: this.config.host,
+              port: this.config.port,
+              username: this.config.user,
+              privateKey,
+              readyTimeout: this.config.timeout,
+            });
+          })
+          .catch((err: any) => {
+            logger.error({
+              message: 'Erro ao ler chave SSH para download',
+              error: err.message,
+            });
+            reject(err);
           });
-        })
-        .catch((err) => {
-          logger.error({
-            message: 'Erro ao ler chave SSH para download',
-            error: err.message,
-          });
-          reject(err);
-        });
+      } else {
+        reject(new Error('Chave SSH não configurada para download'));
+      }
     });
   }
 
@@ -310,8 +314,8 @@ export class SSHFetchService {
   ): Promise<string> {
     try {
       // Criar diretório local se não existir
-      const today = new Date().toISOString().split('T')[0];
-      const localDateDir = path.join(localDir, today);
+      const today: string = new Date().toISOString().split('T')[0] || new Date().toISOString().slice(0, 10);
+      const localDateDir = path.join(localDir!, today);
       
       await fs.mkdir(localDateDir, { recursive: true });
 
