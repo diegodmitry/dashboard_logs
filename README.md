@@ -39,6 +39,15 @@ SSH_TIMEOUT=15000
 LOG_LEVEL=info
 ```
 
+**⚠️ Importante para SSH**: Se o servidor SSH usar algoritmos legados (ssh-rsa), configure:
+```bash
+# Opção 1: Arquivo de configuração SSH
+cp backend/ssh_config ~/.ssh/config
+
+# Opção 2: Variáveis de ambiente
+export SSH_OPTS="HostKeyAlgorithms=+ssh-rsa,PubkeyAcceptedAlgorithms=+ssh-rsa"
+```
+
 **Frontend** (`frontend/env.example` → `frontend/.env`):
 ```env
 VITE_API_URL=http://localhost:3000
