@@ -11,7 +11,8 @@
     "test": "jest",
     "seed:logs": "tsx src/scripts/seedLogs.ts",
     "ingest": "tsx src/scripts/ingestLogs.ts",
-    "test:ssh": "tsx src/scripts/testSSH.ts"
+    "test:ssh": "tsx src/scripts/testSSH.ts",
+    "test:ssh:bash": "./scripts/testSSHConnection.sh"
   },
   "dependencies": {
     "express": "^4.18.2",
