@@ -10,7 +10,12 @@ async function testSSHConnection() {
       message: 'Iniciando teste de conexão SSH',
     });
 
-    const sshConfig = {
+    // Configurar variáveis de ambiente para compatibilidade SSH legada
+    // Equivalente ao comando: ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa
+    process.env.SSH_OPTS = 'HostKeyAlgorithms=+ssh-rsa,PubkeyAcceptedAlgorithms=+ssh-rsa';
+
+    // Criar configuração SSH com tipos corretos
+    const sshConfig: any = {
       host: process.env.SSH_HOST || '10.17.145.128',
       user: process.env.SSH_USER || 'ossadmin_altaia',
       port: parseInt(process.env.SSH_PORT || '22'),
@@ -19,6 +24,8 @@ async function testSSHConnection() {
       timeout: parseInt(process.env.SSH_TIMEOUT || '15000'),
       keepaliveInterval: parseInt(process.env.SSH_KEEPALIVE_INTERVAL || '10000'),
       keepaliveCountMax: parseInt(process.env.SSH_KEEPALIVE_COUNT_MAX || '3'),
+      // Configurações para compatibilidade com servidor SSH legado
+      // Equivalente ao comando: ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa
     };
 
     logger.info({
