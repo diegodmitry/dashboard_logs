@@ -79,6 +79,8 @@ export class SSHFetchService {
         readyTimeout: this.config.timeout,
         keepaliveInterval: this.config.keepaliveInterval || 10000,
         keepaliveCountMax: this.config.keepaliveCountMax || 3,
+        // Configurações para compatibilidade com servidores SSH legados
+        // Usar configurações básicas para evitar problemas de compatibilidade
       };
 
       // Usar chave privada ou senha
@@ -86,7 +88,7 @@ export class SSHFetchService {
         fs.readFile(this.config.privateKeyPath)
           .then((privateKey: Buffer) => {
             connectConfig.privateKey = privateKey;
-            conn.connect(connectConfig);
+            conn.connect(connectConfig); // Conecta ao Servidor
           })
           .catch((err: any) => {
             logger.error({
@@ -283,13 +285,17 @@ export class SSHFetchService {
       if (this.config.privateKeyPath) {
         fs.readFile(this.config.privateKeyPath)
           .then((privateKey: Buffer) => {
-            conn.connect({
-              host: this.config.host,
-              port: this.config.port,
-              username: this.config.user,
-              privateKey,
-              readyTimeout: this.config.timeout,
-            });
+                    conn.connect({
+          host: this.config.host,
+          port: this.config.port,
+          username: this.config.user,
+          privateKey,
+          readyTimeout: this.config.timeout,
+          // Configurações para compatibilidade com servidores SSH legados
+          algorithms: {
+            serverHostKey: ['ssh-rsa'],
+          },
+        });
           })
           .catch((err: any) => {
             logger.error({
