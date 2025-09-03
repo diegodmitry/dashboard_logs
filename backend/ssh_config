@@ -1,0 +1,11 @@
+# Configuração SSH para compatibilidade com servidor legado
+# Equivalente ao comando: ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa
+
+Host 10.17.145.128
+    HostKeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers +aes128-cbc,3des-cbc
+    MACs +hmac-sha1,hmac-sha1-96
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
