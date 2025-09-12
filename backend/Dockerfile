@@ -2,15 +2,18 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Instalar dependências de produção
+# Instalar todas as dependências (incluindo devDependencies para build)
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 
-# Copiar código fonte
+# Copiar código fonte (node_modules é ignorado pelo .dockerignore)
 COPY . .
 
 # Compilar TypeScript
 RUN npm run build
+
+# Remover devDependencies para reduzir tamanho da imagem
+RUN npm prune --production
 
 # Expor porta
 EXPOSE 3000
