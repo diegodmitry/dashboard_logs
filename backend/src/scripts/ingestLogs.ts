@@ -20,10 +20,10 @@ async function ingestLogs() {
 
     // Verificar se há configuração SSH
     const sshConfig = {
-      host: process.env.SSH_HOST,
-      user: process.env.SSH_USER,
+      host: process.env.SSH_HOST || '',
+      user: process.env.SSH_USER || '',
       port: parseInt(process.env.SSH_PORT || '22'),
-      privateKeyPath: process.env.SSH_KEY_PATH,
+      privateKeyPath: process.env.SSH_KEY_PATH || '',
       timeout: parseInt(process.env.SSH_TIMEOUT || '15000'),
     };
 
@@ -46,9 +46,12 @@ async function ingestLogs() {
         const ptinLogs = await sshService.fetchPTINLogs(2000);
         
         if (ptinLogs && ptinLogs.trim()) {
+          // Importar fs/promises para operações de arquivo
+          const fs = await import('fs/promises');
+          
           // Salvar logs PTIN localmente
-          const today = new Date().toISOString().split('T')[0];
-          const localDateDir = path.join(__dirname, '../../logs_in/remote', today);
+          const today = new Date().toISOString().split('T')[0] ?? 'unknown';
+          const localDateDir = path.join('/app', 'logs_in/remote', today);
           await fs.mkdir(localDateDir, { recursive: true });
           
           const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -92,7 +95,7 @@ async function ingestLogs() {
     }
 
     // Ingerir logs locais se existirem
-    const localLogsDir = path.join(__dirname, '../../logs_in');
+    const localLogsDir = path.join('/app', 'logs_in');
     const fs = await import('fs/promises');
     
     try {
@@ -131,7 +134,9 @@ async function ingestLogs() {
     }
 
     // Verificar total de logs no banco
-    const totalLogs = await mongoose.connection.db.collection('logs').countDocuments();
+    const totalLogs = mongoose.connection.db 
+      ? await mongoose.connection.db.collection('logs').countDocuments()
+      : 0;
     logger.info({
       message: 'Ingestão concluída',
       totalLogs,

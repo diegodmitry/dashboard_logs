@@ -77,7 +77,7 @@ export const TopErrorsChart: React.FC<TopErrorsChartProps> = ({
     paper_bgcolor: 'rgba(0,0,0,0)',
   };
 
-  const config = {
+  const config: any = {
     displayModeBar: true,
     displaylogo: false,
     modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d'],

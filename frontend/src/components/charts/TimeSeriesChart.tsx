@@ -73,7 +73,7 @@ export const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
       type: 'scatter' as const,
       mode: 'lines+markers' as const,
       name: 'Total',
-      line: { color: '#6c757d', width: 3, dash: 'dash' },
+      line: { color: '#6c757d', width: 3, dash: 'dash' as const },
       marker: { size: 8 },
     },
   ];
@@ -104,7 +104,7 @@ export const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
     hovermode: 'x unified' as const,
   };
 
-  const config = {
+  const config: any = {
     displayModeBar: true,
     displaylogo: false,
     modeBarButtonsToRemove: ['lasso2d', 'select2d'],

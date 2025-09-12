@@ -53,7 +53,7 @@ export const LevelsChart: React.FC<LevelsChartProps> = ({
       marker: {
         colors: data.map(item => colors[item.level as keyof typeof colors] || '#6c757d'),
       },
-      textinfo: 'label+percent',
+      textinfo: 'label+percent' as const,
       textposition: 'outside' as const,
       hovertemplate: 
         '<b>%{label}</b><br>' +
@@ -80,7 +80,7 @@ export const LevelsChart: React.FC<LevelsChartProps> = ({
     paper_bgcolor: 'rgba(0,0,0,0)',
   };
 
-  const config = {
+  const config: any = {
     displayModeBar: true,
     displaylogo: false,
     modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d'],

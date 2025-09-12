@@ -79,11 +79,10 @@ async function connectToDatabase() {
       uri: mongoUri.replace(/\/\/.*@/, '//***:***@'), // Mascarar credenciais
     });
 
-    // Criar índices se não existirem
-    await mongoose.connection.db.collection('logs').createIndex(
-      { timestamp: 1 },
-      { expireAfterSeconds: 864000 } // TTL de 10 dias
-    );
+    // Índices são criados pelo init.js do MongoDB
+    logger.info({
+      message: 'Índices do MongoDB gerenciados pelo init.js',
+    });
 
     logger.info({
       message: 'Índices do MongoDB criados/verificados',

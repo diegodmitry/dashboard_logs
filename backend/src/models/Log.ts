@@ -16,13 +16,11 @@ const LogSchema = new Schema<ILog>(
     timestamp: {
       type: Date,
       required: true,
-      index: true,
     },
     level: {
       type: String,
       enum: ['error', 'warn', 'info', 'debug'],
       required: true,
-      index: true,
     },
     message: {
       type: String,
@@ -34,7 +32,6 @@ const LogSchema = new Schema<ILog>(
     },
     errorCode: {
       type: String,
-      index: true,
     },
     context: {
       type: Schema.Types.Mixed,
@@ -42,14 +39,13 @@ const LogSchema = new Schema<ILog>(
   },
   {
     timestamps: true,
+    // Desabilitar criação automática de índices pelo Mongoose
+    // Os índices são criados pelo init.js do MongoDB
+    autoIndex: false,
   }
 );
 
-// TTL de 10 dias (864000 segundos)
-LogSchema.index({ timestamp: 1 }, { expireAfterSeconds: 864000 });
-
-// Índices compostos para consultas eficientes
-LogSchema.index({ level: 1, timestamp: -1 });
-LogSchema.index({ errorCode: 1, timestamp: -1 });
+// Índices são criados pelo init.js do MongoDB para evitar conflitos
+// autoIndex: false previne criação automática de índices pelo Mongoose
 
 export const Log = mongoose.model<ILog>('Log', LogSchema);

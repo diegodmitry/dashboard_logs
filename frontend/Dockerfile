@@ -9,8 +9,8 @@ RUN npm ci
 # Copiar código fonte
 COPY . .
 
-# Build da aplicação
-RUN npm run build
+# Build da aplicação com mais memória
+RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 # Stage de produção
 FROM nginx:alpine

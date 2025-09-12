@@ -125,7 +125,9 @@ async function seedLogs() {
     });
 
     // Limpar logs existentes
-    await mongoose.connection.db.collection('logs').deleteMany({});
+    if (mongoose.connection.db) {
+      await mongoose.connection.db.collection('logs').deleteMany({});
+    }
     logger.info({ message: 'Logs existentes removidos' });
 
     // Ingerir logs de exemplo
@@ -140,7 +142,9 @@ async function seedLogs() {
     });
 
     // Verificar dados inseridos
-    const totalLogs = await mongoose.connection.db.collection('logs').countDocuments();
+    const totalLogs = mongoose.connection.db 
+      ? await mongoose.connection.db.collection('logs').countDocuments()
+      : 0;
     logger.info({
       message: 'Total de logs no banco',
       count: totalLogs,
