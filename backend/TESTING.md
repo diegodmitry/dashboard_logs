@@ -104,6 +104,43 @@ Tests:       19 passed, 19 total
 Time:        1.917 s
 ```
 
+
+### Executar Teste Específico (Log.test.ts)
+```bash
+MONGO_URI=mongodb://localhost:27017/log-dashboard-test npm test -- --testPathPattern="Log.test.ts" --testTimeout=60000
+```
+
+**Resultado Esperado:**
+```
+✓ should load test environment (2 ms)
+Log Model
+  Schema Validation
+    ✓ should create a valid log entry (78 ms)
+    ✓ should create a log entry without optional fields (12 ms)
+    ✓ should reject invalid level values (8 ms)
+    ✓ should reject missing required fields (5 ms)
+    ✓ should reject missing timestamp (5 ms)
+    ✓ should reject missing message (6 ms)
+    ✓ should reject missing source (6 ms)
+  Data Types
+    ✓ should handle different log levels correctly (23 ms)
+    ✓ should handle complex context objects (10 ms)
+    ✓ should handle long messages (11 ms)
+  Timestamps
+    ✓ should automatically set createdAt and updatedAt (8 ms)
+    ✓ should update updatedAt when document is modified (42 ms)
+  Query Operations
+    ✓ should find logs by level (38 ms)
+    ✓ should find logs by source (13 ms)
+    ✓ should find logs by error code (16 ms)
+    ✓ should find logs by date range (15 ms)
+    ✓ should sort logs by timestamp (22 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       18 passed, 18 total
+Time:        2.752 s
+```
+
 ## Configuração de Ambiente
 
 ### Variáveis de Ambiente para Testes
