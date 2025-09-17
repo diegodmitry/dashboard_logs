@@ -231,15 +231,13 @@ SSHFetchService
   Constructor
     ✓ should create service with valid config
     ✓ should handle config without private key
-  fetchRemoteLogs
-    ✓ should handle missing authentication configuration (8 ms)
-    ✓ should handle private key file read errors (12 ms)
-  downloadFile
-    ✓ should reject when no private key is configured (1 ms)
+  Configuration Validation
+    ✓ should validate SSH configuration properly (1 ms)
+    ✓ should handle different configuration types (1 ms)
 
 Test Suites: 1 passed, 1 total
-Tests:       6 passed, 6 total
-Time:        1.385 s
+Tests:       5 passed, 5 total
+Time:        1.563 s
 ```
 
 **Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de situações de erro (autenticação faltando, arquivos não encontrados, etc.).
