@@ -219,6 +219,31 @@ Time:        3.339 s
 
 **Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de dados inválidos (níveis inválidos, campos faltando, etc.).
 
+### Executar Teste de Serviço SSH (sshFetch.test.ts)
+```bash
+npm test -- --testPathPattern=sshFetch.test.ts
+```
+
+**Resultado Esperado:**
+```
+✓ should load test environment (2 ms)
+SSHFetchService
+  Constructor
+    ✓ should create service with valid config
+    ✓ should handle config without private key
+  fetchRemoteLogs
+    ✓ should handle missing authentication configuration (8 ms)
+    ✓ should handle private key file read errors (12 ms)
+  downloadFile
+    ✓ should reject when no private key is configured (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Time:        1.385 s
+```
+
+**Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de situações de erro (autenticação faltando, arquivos não encontrados, etc.).
+
 ## Configuração de Ambiente
 
 ### Variáveis de Ambiente para Testes
