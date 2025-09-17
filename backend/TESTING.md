@@ -242,6 +242,56 @@ Time:        1.563 s
 
 **Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de situações de erro (autenticação faltando, arquivos não encontrados, etc.).
 
+### Executar Teste de Tratamento de Erros (errorHandling.test.ts)
+```bash
+npm test -- --testPathPattern=errorHandling.test.ts
+```
+
+**Resultado Esperado:**
+```
+✓ should load test environment (3 ms)
+Error Handling and Edge Cases
+  Input Validation Edge Cases
+    ✓ should handle extremely long messages (205 ms)
+    ✓ should handle special characters in messages (47 ms)
+    ✓ should handle unicode characters (21 ms)
+    ✓ should handle very old timestamps (27 ms)
+    ✓ should handle future timestamps (17 ms)
+  Query Parameter Edge Cases
+    ✓ should handle very large limit values (16 ms)
+    ✓ should handle negative limit values (13 ms)
+    ✓ should handle zero limit values (9 ms)
+    ✓ should handle invalid date formats (11 ms)
+    ✓ should handle invalid bucket values (11 ms)
+    ✓ should handle empty query parameters (13 ms)
+    ✓ should handle multiple query parameters with same name (10 ms)
+  Database Edge Cases
+    ✓ should handle empty database gracefully (14 ms)
+    ✓ should handle database with only non-error logs (24 ms)
+    ✓ should handle logs without error codes (19 ms)
+    ✓ should handle very large datasets efficiently (5731 ms)
+  Concurrent Access
+    ✓ should handle concurrent requests (156 ms)
+  Memory and Resource Limits
+    ✓ should handle memory-intensive queries gracefully (3344 ms)
+  Network and Timeout Edge Cases
+    ✓ should handle very long URLs (28 ms)
+    ✓ should handle malformed request headers (13 ms)
+  Data Consistency
+    ✓ should maintain data consistency during concurrent writes (145 ms)
+    ✓ should handle partial data corruption gracefully (16 ms)
+  Boundary Value Testing
+    ✓ should handle minimum valid limit (13 ms)
+    ✓ should handle maximum valid limit (12 ms)
+    ✓ should handle boundary date values (20 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       26 passed, 26 total
+Time:        12.71 s
+```
+
+**Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de situações de erro (parâmetros inválidos, validações, etc.).
+
 ## Configuração de Ambiente
 
 ### Variáveis de Ambiente para Testes
