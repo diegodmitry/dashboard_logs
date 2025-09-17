@@ -178,6 +178,47 @@ Time:        3.347 s
 
 **Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de situações de erro (parâmetros inválidos, JSON malformado, etc.).
 
+### Executar Teste de Serviço de Ingestão (logIngest.test.ts)
+```bash
+npm test -- --testPathPattern=logIngest.test.ts
+```
+
+**Resultado Esperado:**
+```
+✓ should load test environment (3 ms)
+LogIngestService
+  ingestLog
+    ✓ should successfully ingest a valid log (63 ms)
+    ✓ should handle timestamp as string (11 ms)
+    ✓ should handle minimal log data (8 ms)
+    ✓ should reject invalid level (17 ms)
+    ✓ should reject missing required fields (8 ms)
+    ✓ should reject empty message (5 ms)
+    ✓ should reject empty source (5 ms)
+    ✓ should handle complex context objects (12 ms)
+  ingestBatch
+    ✓ should successfully ingest multiple valid logs (40 ms)
+    ✓ should handle mixed valid and invalid logs (20 ms)
+    ✓ should handle empty batch (4 ms)
+    ✓ should handle large batch efficiently (638 ms)
+  ingestFromFile
+    ✓ should successfully ingest logs from valid JSON file (19 ms)
+    ✓ should handle file with mixed valid and invalid logs (20 ms)
+    ✓ should reject non-array JSON file (5 ms)
+    ✓ should handle non-existent file (7 ms)
+    ✓ should handle malformed JSON file (7 ms)
+    ✓ should handle empty JSON file (6 ms)
+  Error Handling
+    ✓ should handle database connection errors gracefully (40 ms)
+    ✓ should handle malformed timestamp strings (10 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       21 passed, 21 total
+Time:        3.339 s
+```
+
+**Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de dados inválidos (níveis inválidos, campos faltando, etc.).
+
 ## Configuração de Ambiente
 
 ### Variáveis de Ambiente para Testes
