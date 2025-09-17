@@ -107,3 +107,8 @@ public
 # Backup files
 *.bak
 *.backup
+
+# Screenshots (uncomment if you want to keep them private)
+# screenshots/*.png
+# screenshots/*.jpg
+# screenshots/*.jpeg
