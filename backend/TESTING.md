@@ -141,6 +141,43 @@ Tests:       18 passed, 18 total
 Time:        2.752 s
 ```
 
+### Executar Teste de Integração (stats.integration.test.ts)
+```bash
+npm test -- --testPathPattern=stats.integration.test.ts
+```
+
+**Resultado Esperado:**
+```
+✓ should load test environment (2 ms)
+Stats API Integration Tests
+  GET /stats/top-errors
+    ✓ should return empty array when no errors exist (84 ms)
+    ✓ should return top errors when they exist (37 ms)
+    ✓ should respect limit parameter (30 ms)
+    ✓ should filter by date range (18 ms)
+    ✓ should handle invalid parameters gracefully (10 ms)
+  GET /stats/time-series
+    ✓ should return time series data (18 ms)
+    ✓ should handle day bucket correctly (17 ms)
+  GET /stats/levels
+    ✓ should return levels distribution (19 ms)
+    ✓ should filter levels by date range (17 ms)
+  GET /health
+    ✓ should return health status (12 ms)
+  Error Handling Integration
+    ✓ should handle 404 for non-existent routes (8 ms)
+    ✓ should handle malformed JSON in request body (20 ms)
+    ✓ should handle large request payloads (18 ms)
+  Performance Tests
+    ✓ should handle large dataset efficiently (583 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       15 passed, 15 total
+Time:        3.347 s
+```
+
+**Nota:** Os logs de erro que aparecem durante a execução são esperados, pois fazem parte dos testes que verificam o tratamento correto de situações de erro (parâmetros inválidos, JSON malformado, etc.).
+
 ## Configuração de Ambiente
 
 ### Variáveis de Ambiente para Testes

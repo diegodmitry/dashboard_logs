@@ -43,6 +43,25 @@ app.get('/health', (req, res) => {
 // Rotas da API
 app.use('/stats', statsRoutes);
 
+// Middleware para tratar erros de parsing JSON
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction): void => {
+  if (err instanceof SyntaxError && 'body' in err) {
+    logger.error({
+      message: 'JSON malformado recebido',
+      error: err.message,
+      url: req.url,
+      method: req.method,
+    });
+
+    res.status(400).json({
+      success: false,
+      error: 'JSON malformado',
+    });
+    return;
+  }
+  next(err);
+});
+
 // Middleware de tratamento de erros
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
   logger.error({
@@ -93,6 +112,12 @@ async function connectToDatabase() {
       message: 'Erro ao conectar ao MongoDB',
       error: error instanceof Error ? error.message : 'Unknown error',
     });
+    
+    // Em ambiente de teste, lançar o erro ao invés de fazer exit
+    if (process.env.NODE_ENV === 'test') {
+      throw error;
+    }
+    
     process.exit(1);
   }
 }
@@ -129,14 +154,16 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-// Iniciar aplicação
-startServer().catch((error) => {
-  logger.error({
-    message: 'Erro ao iniciar servidor',
-    error: error instanceof Error ? error.message : 'Unknown error',
+// Iniciar aplicação apenas se não estiver em ambiente de teste
+if (process.env.NODE_ENV !== 'test') {
+  startServer().catch((error) => {
+    logger.error({
+      message: 'Erro ao iniciar servidor',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+    process.exit(1);
   });
-  process.exit(1);
-});
+}
 
-// Exportar app para testes
-export { app };
+// Exportar app e funções para testes
+export { app, connectToDatabase };
